@@ -37,6 +37,12 @@ The dataset is imbalanced, with only 16.1% attrition cases.
 
 ---
 
+## Live Demo
+
+https://employee-attrition-prediction-mv81.onrender.com/
+
+---
+
 ## Project Workflow
 
 ### Data Cleaning
