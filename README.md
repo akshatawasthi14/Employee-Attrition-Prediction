@@ -95,17 +95,9 @@ To capture employee behavior more effectively, several domain-inspired features 
 
 Represents the proportion of an employee's career spent at the current company.
 
-```python
-TenureRatio = YearsAtCompany / (TotalWorkingYears + 1)
-```
-
 #### IncomePerYearExp
 
 Normalizes monthly income by total work experience.
-
-```python
-IncomePerYearExp = MonthlyIncome / (TotalWorkingYears + 1)
-```
 
 #### SatisfactionScore
 
@@ -119,40 +111,15 @@ Average of:
 
 Measures promotion frequency relative to company tenure.
 
-```python
-PromotionStagnation =
-YearsSinceLastPromotion / (YearsAtCompany + 1)
-```
-
 #### ManagerStability
 
 Measures consistency of managerial supervision.
-
-```python
-ManagerStability =
-YearsWithCurrManager / (YearsAtCompany + 1)
-```
 
 ---
 
 ### Feature Reduction
 
 After creating engineered features, the original source variables were removed to reduce redundancy.
-
-Dropped Features:
-
-- YearsAtCompany
-- TotalWorkingYears
-- YearsWithCurrManager
-- YearsSinceLastPromotion
-- JobSatisfaction
-- EnvironmentSatisfaction
-- RelationshipSatisfaction
-- MonthlyRate
-- DailyRate
-- HourlyRate
-- JobLevel
-- PercentSalaryHike
 
 Final Dataset:
 
@@ -193,8 +160,6 @@ Numerical Features:
 Categorical Features:
 
 - OneHotEncoder
-- drop='first'
-- handle_unknown='ignore'
 
 After preprocessing:
 
@@ -205,16 +170,7 @@ After preprocessing:
 
 ### Train-Test Split
 
-```python
-train_test_split(
-    test_size=0.20,
-    stratify=y,
-    random_state=42
-)
-```
-
 Training Samples: 1176
-
 Testing Samples: 294
 
 ---
@@ -305,20 +261,45 @@ Using a lower threshold improved the balance between precision and recall for th
 
 ---
 
-## Final Model Performance
+## Final Model
+
+After model benchmarking, hyperparameter tuning, and threshold optimization, Logistic Regression was selected as the final model due to its strong balance of predictive performance, interpretability, and deployment simplicity.
+
+While several ensemble methods achieved competitive results, Logistic Regression delivered the highest ROC-AUC score and responded well to threshold optimization, making it the most suitable choice for deployment.
+
+### Final Performance (Optimized Threshold = 0.25)
 
 | Metric | Score |
 |----------|----------|
-| Accuracy | 86.05% |
-| Precision | 60.00% |
-| Recall | 38.30% |
-| F1 Score | 46.76% |
+| Accuracy | 85.03% |
+| Precision | 52.63% |
+| Recall | 63.83% |
+| F1 Score | 57.69% |
 | ROC-AUC | 0.801 |
 
-Classification Threshold:
+### Why Threshold Optimization?
+
+The default Logistic Regression classification threshold of **0.50** produced higher precision but missed a substantial number of attrition cases.
+
+To improve detection of employees likely to leave, thresholds between **0.10 and 0.89** were evaluated using F1 Score.
+
+The optimal threshold was found to be:
 
 ```python
 0.25
+```
+
+This increased the Recall and F1 score at the cost of a modest reduction in precision.
+
+For an employee attrition use case, improving recall is desirable because identifying potential attrition risks is generally more valuable than maximizing precision alone.
+
+### Classification Report
+
+| Class | Precision | Recall | F1 Score |
+|---------|---------|---------|---------|
+| Stay (0) | 0.93 | 0.89 | 0.91 |
+| Leave (1) | 0.53 | 0.64 | 0.58 |
+
 ```
 
 ---
