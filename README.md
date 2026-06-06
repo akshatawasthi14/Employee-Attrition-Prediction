@@ -23,11 +23,6 @@ Target Encoding:
 
 The dataset is imbalanced, with only 16.1% attrition cases.
 
-| Class | Count |
-|---------|---------|
-| Stay | 1233 |
-| Leave | 237 |
-
 ---
 
 ## Application Preview
@@ -161,11 +156,6 @@ Categorical Features:
 
 - OneHotEncoder
 
-After preprocessing:
-
-- Input Features: 23
-- Encoded Features: 37
-
 ---
 
 ### Train-Test Split
@@ -238,12 +228,7 @@ ROC-AUC
 
 ### Final Model Selection
 
-Although multiple ensemble methods and resampling approaches were evaluated, the tuned Logistic Regression model trained on the original dataset provided the best overall balance between:
-
-- Predictive performance
-- Generalization
-- Interpretability
-- Deployment simplicity
+Although multiple ensemble methods and resampling approaches were evaluated, the tuned Logistic Regression model trained on the original dataset proved to be the best one.
 
 ---
 
@@ -299,8 +284,6 @@ For an employee attrition use case, improving recall is desirable because identi
 |---------|---------|---------|---------|
 | Stay (0) | 0.93 | 0.89 | 0.91 |
 | Leave (1) | 0.53 | 0.64 | 0.58 |
-
-```
 
 ---
 
