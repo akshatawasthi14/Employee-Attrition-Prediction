@@ -38,7 +38,7 @@ The dataset is imbalanced, with only 16.1% attrition cases.
 
 ### Example Prediction
 
-![Prediction](screenshots/low-risk-prediction.png)
+![Prediction](screenshots/low-risk-prediction-example.png)
 
 ---
 
